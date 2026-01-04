@@ -60,7 +60,7 @@ data class ApiErrorResponse(
                     ),
                 )
         }
-        
+
         fun of(code: ErrorCode, violations: Set<ConstraintViolation<*>>): ResponseEntity<ApiErrorResponse> {
             return ResponseEntity
                 .status(code.status.code)

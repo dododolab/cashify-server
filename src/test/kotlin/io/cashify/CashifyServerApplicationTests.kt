@@ -9,5 +9,4 @@ class CashifyServerApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

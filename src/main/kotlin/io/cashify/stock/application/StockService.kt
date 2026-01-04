@@ -22,7 +22,7 @@ class StockService(
             ticker = command.ticker,
             companyName = command.companyName,
             exchange = command.exchange,
-            industry = command.industry
+            industry = command.industry,
         )
         return stockRepository.save(stock)
     }

@@ -42,7 +42,7 @@ class DividendServiceTest {
             ticker = ticker,
             companyName = "Apple Inc.",
             exchange = "NASDAQ",
-            industry = "Technology"
+            industry = "Technology",
         )
     }
 
@@ -60,7 +60,7 @@ class DividendServiceTest {
             val relevantDividends = listOf(
                 Dividend(stock, LocalDate.of(2023, 2, 1), LocalDate.of(2023, 2, 15), BigDecimal("0.23"), "USD"),
                 Dividend(stock, LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 15), BigDecimal("0.23"), "USD"),
-                Dividend(stock, LocalDate.of(2023, 8, 1), LocalDate.of(2023, 8, 15), BigDecimal("0.24"), "USD")
+                Dividend(stock, LocalDate.of(2023, 8, 1), LocalDate.of(2023, 8, 15), BigDecimal("0.24"), "USD"),
             )
 
             every { stockRepository.findByTicker(ticker) } returns stock
@@ -70,7 +70,7 @@ class DividendServiceTest {
                 ticker = ticker,
                 numberOfShares = 100,
                 startDate = startDate,
-                endDate = endDate
+                endDate = endDate,
             )
 
             // When
@@ -91,7 +91,7 @@ class DividendServiceTest {
                 ticker = nonExistentTicker,
                 numberOfShares = 100,
                 startDate = LocalDate.of(2023, 1, 1),
-                endDate = LocalDate.of(2023, 12, 31)
+                endDate = LocalDate.of(2023, 12, 31),
             )
 
             // When & Then
@@ -115,7 +115,7 @@ class DividendServiceTest {
                 ticker = ticker,
                 numberOfShares = 100,
                 startDate = startDate,
-                endDate = endDate
+                endDate = endDate,
             )
 
             // When

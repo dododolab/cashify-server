@@ -2,7 +2,6 @@ package io.cashify.stock.exception
 
 import io.cashify.support.exception.ErrorCode
 import io.cashify.support.exception.HttpResponseStatus
-import org.springframework.http.HttpStatus
 
 enum class StockErrorCode(
     override val status: HttpResponseStatus,

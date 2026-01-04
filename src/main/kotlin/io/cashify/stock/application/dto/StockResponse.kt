@@ -1,7 +1,6 @@
 package io.cashify.stock.application.dto
 
 import io.cashify.stock.domain.Stock
-import java.time.LocalDateTime
 
 data class StockResponse(
     val id: Long,

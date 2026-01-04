@@ -1,7 +1,7 @@
 package io.cashify.dividend.api
 
-import io.cashify.dividend.application.dto.DividendCalculationQuery
 import io.cashify.dividend.application.DividendService
+import io.cashify.dividend.application.dto.DividendCalculationQuery
 import io.cashify.support.exception.GlobalExceptionHandler
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -47,7 +47,7 @@ class DividendControllerTest {
                 ticker = "AAPL",
                 numberOfShares = 100,
                 startDate = LocalDate.of(2023, 1, 1),
-                endDate = LocalDate.of(2023, 12, 31)
+                endDate = LocalDate.of(2023, 12, 31),
             )
             val expectedResult = BigDecimal("70.00")
             every { dividendService.calculateTotalDividend(request) } returns expectedResult
@@ -58,7 +58,7 @@ class DividendControllerTest {
                     .param("stockTicker", request.ticker)
                     .param("numberOfShares", request.numberOfShares.toString())
                     .param("startDate", request.startDate.toString())
-                    .param("endDate", request.endDate.toString())
+                    .param("endDate", request.endDate.toString()),
             )
                 .andExpect(status().isOk)
                 .andExpect(content().string("70.00"))

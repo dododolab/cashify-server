@@ -1,7 +1,7 @@
 package io.cashify.dividend.api
 
-import io.cashify.dividend.application.dto.DividendCalculationQuery
 import io.cashify.dividend.application.DividendService
+import io.cashify.dividend.application.dto.DividendCalculationQuery
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

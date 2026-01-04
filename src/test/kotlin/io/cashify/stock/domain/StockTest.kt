@@ -37,6 +37,5 @@ class StockTest {
             assertEquals(exchange, stock.exchange)
             assertEquals(industry, stock.industry)
         }
-
     }
 }

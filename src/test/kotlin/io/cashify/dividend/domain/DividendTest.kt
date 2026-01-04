@@ -21,7 +21,7 @@ class DividendTest {
             ticker = "MSFT",
             companyName = "Microsoft Corp.",
             exchange = "NASDAQ",
-            industry = "Technology"
+            industry = "Technology",
         )
     }
 
@@ -44,7 +44,7 @@ class DividendTest {
                 exDividendDate = exDividendDate,
                 paymentDate = paymentDate,
                 dividend = dividendAmount,
-                currency = currency
+                currency = currency,
             )
 
             // Then
@@ -55,6 +55,5 @@ class DividendTest {
             assertEquals(dividendAmount, dividend.dividend)
             assertEquals(currency, dividend.currency)
         }
-
     }
 }
