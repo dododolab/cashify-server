@@ -1,8 +1,8 @@
 package io.cashify.dividend.domain
 
 import io.cashify.stock.domain.Stock
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.SoftAssertions.assertSoftly
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
@@ -48,12 +48,14 @@ class DividendTest {
             )
 
             // Then
-            assertNotNull(dividend)
-            assertEquals(stock, dividend.stock)
-            assertEquals(exDividendDate, dividend.exDividendDate)
-            assertEquals(paymentDate, dividend.paymentDate)
-            assertEquals(dividendAmount, dividend.dividend)
-            assertEquals(currency, dividend.currency)
+            assertSoftly {
+                assertThat(dividend).isNotNull()
+                assertThat(dividend.stock).isEqualTo(stock)
+                assertThat(dividend.exDividendDate).isEqualTo(exDividendDate)
+                assertThat(dividend.paymentDate).isEqualTo(paymentDate)
+                assertThat(dividend.dividend).isEqualTo(dividendAmount)
+                assertThat(dividend.currency).isEqualTo(currency)
+            }
         }
     }
 }

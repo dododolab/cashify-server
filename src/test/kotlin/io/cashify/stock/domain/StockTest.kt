@@ -1,7 +1,7 @@
 package io.cashify.stock.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.SoftAssertions.assertSoftly
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -31,11 +31,13 @@ class StockTest {
             )
 
             // Then
-            assertNotNull(stock)
-            assertEquals(ticker, stock.ticker)
-            assertEquals(companyName, stock.companyName)
-            assertEquals(exchange, stock.exchange)
-            assertEquals(industry, stock.industry)
+            assertSoftly {
+                assertThat(stock).isNotNull()
+                assertThat(stock.ticker).isEqualTo(ticker)
+                assertThat(stock.companyName).isEqualTo(companyName)
+                assertThat(stock.exchange).isEqualTo(exchange)
+                assertThat(stock.industry).isEqualTo(industry)
+            }
         }
     }
 }

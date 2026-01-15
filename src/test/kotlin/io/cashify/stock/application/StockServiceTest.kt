@@ -10,11 +10,12 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.slot
-import org.junit.jupiter.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.assertj.core.api.SoftAssertions.assertSoftly
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(MockKExtension::class)
@@ -44,8 +45,10 @@ class StockServiceTest {
 
             // Then
             val capturedStock = savedStockSlot.captured
-            Assertions.assertEquals(request.ticker, capturedStock.ticker)
-            Assertions.assertEquals(request.companyName, capturedStock.companyName)
+            assertSoftly {
+                assertThat(capturedStock.ticker).isEqualTo(request.ticker)
+                assertThat(capturedStock.companyName).isEqualTo(request.companyName)
+            }
         }
 
         @Test
@@ -57,10 +60,10 @@ class StockServiceTest {
             every { stockRepository.findByTicker(request.ticker) } returns existingStock
 
             // When & Then
-            val exception = assertThrows<BusinessException> {
+            assertThatThrownBy {
                 stockService.createStock(request)
-            }
-            Assertions.assertEquals(StockErrorCode.STOCK_ALREADY_EXISTS, exception.errorCode)
+            }.isInstanceOf(BusinessException::class.java)
+                .hasMessage(StockErrorCode.STOCK_ALREADY_EXISTS.message)
         }
     }
 
@@ -80,8 +83,10 @@ class StockServiceTest {
             val foundStock = stockService.getStockByTicker(ticker)
 
             // Then
-            Assertions.assertEquals(stock.ticker, foundStock.ticker)
-            Assertions.assertEquals(stock.companyName, foundStock.companyName)
+            assertSoftly {
+                assertThat(foundStock.ticker).isEqualTo(stock.ticker)
+                assertThat(foundStock.companyName).isEqualTo(stock.companyName)
+            }
         }
 
         @Test
@@ -92,10 +97,11 @@ class StockServiceTest {
             every { stockRepository.findByTicker(ticker) } returns null
 
             // When & Then
-            val exception = assertThrows<BusinessException> {
+            assertThatThrownBy {
                 stockService.getStockByTicker(ticker)
-            }
-            Assertions.assertEquals(StockErrorCode.STOCK_NOT_FOUND, exception.errorCode)
+            }.isInstanceOf(BusinessException::class.java)
+                .extracting { (it as BusinessException).errorCode }
+                .isEqualTo(StockErrorCode.STOCK_NOT_FOUND)
         }
     }
 }

@@ -11,12 +11,12 @@ import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import org.junit.jupiter.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -77,7 +77,7 @@ class DividendServiceTest {
             val totalDividend = dividendService.calculateTotalDividend(request)
 
             // Then
-            Assertions.assertEquals(BigDecimal("70.00"), totalDividend) // (0.23 + 0.23 + 0.24) * 100
+            assertThat(totalDividend).isEqualTo(BigDecimal("70.00")) // (0.23 + 0.23 + 0.24) * 100
         }
 
         @Test
@@ -95,10 +95,10 @@ class DividendServiceTest {
             )
 
             // When & Then
-            val exception = assertThrows<BusinessException> {
+            assertThatThrownBy {
                 dividendService.calculateTotalDividend(request)
-            }
-            Assertions.assertEquals(StockErrorCode.STOCK_NOT_FOUND, exception.errorCode)
+            }.isInstanceOf(BusinessException::class.java)
+                .hasMessage(StockErrorCode.STOCK_NOT_FOUND.message)
         }
 
         @Test
@@ -122,7 +122,7 @@ class DividendServiceTest {
             val totalDividend = dividendService.calculateTotalDividend(request)
 
             // Then
-            Assertions.assertEquals(BigDecimal("0"), totalDividend.stripTrailingZeros())
+            assertThat(totalDividend.stripTrailingZeros()).isEqualTo(BigDecimal("0"))
         }
     }
 }
